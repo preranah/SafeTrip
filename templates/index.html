@@ -201,6 +201,12 @@
                         var lng = place.geometry.location.lng();
                         console.log(lat);
                         console.log(lng);
+			$.ajax({
+			  type: "POST",
+			  url: '/data',
+			  data: {"lat":lat,"lng":lng},
+			  success: console.log("success")
+			});
                     }
                     map.fitBounds(bounds);
                 });
@@ -422,7 +428,7 @@
 
 <!-- jQuery -->
 <script src="static/vendor/jquery/jquery.min.js"></script>
-
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="static/vendor/bootstrap/js/bootstrap.min.js"></script>
 
