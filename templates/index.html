@@ -127,7 +127,7 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h2 class="section-heading">Try</h2>
-                <h3 class="section-subheading text-muted">Try the earthquake data now</h3>
+                <h3 class="section-subheading text-muted">Try the earthquake data now: Type the place in to the map and the list of eartquakes will hsow up under the map</h3>
             </div>
         </div>
     </div>
@@ -137,7 +137,16 @@
         <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDQva4w0QussxVkicCvaU1M_-5kHFOwp54&libraries=places"></script>-->
         <!--async defer-->
     </div>
+    <br>
+    <br>
+    <div class="row">
+	<div class="col-lg-12 text-center">
+		<h2 class="section-subheading text-muted">List of earthquakes observed in the area over the years</h2>
+		<div id="hazard"></div>
+	</div>
+    </div>	
         <script>
+	
             var map;
             var minZoomLevel = 2;
             function initMap() {
@@ -205,7 +214,16 @@
 			  url: '/data/',
 			  data: {"lat":lat,"lng":lng},
 			  success: function(response) {
-                console.log(response);
+		var length = response.length;
+		var eqlist = jQuery.parseJSON(response);
+		if(length> 0){
+			$("#hazard").append("The number of earthquakes observed in the area are:",length,'<br/>');
+			console.log(typeof(eqlist),eqlist);
+			$.each(eqlist, function( index, value ) {
+			  console.log( index + ": " + value );
+			  $("#hazard").append("Date of occurance:",value[0],"&nbsp;"+"Magnitude:",value[5],"&nbsp;"+" Place:",value[14],'<br/>');
+			});
+			}
             },
 			error: function(error) {
                 console.log(error);
@@ -431,7 +449,6 @@
 
 <!-- jQuery -->
 <script src="static/vendor/jquery/jquery.min.js"></script>
-<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="static/vendor/bootstrap/js/bootstrap.min.js"></script>
 
