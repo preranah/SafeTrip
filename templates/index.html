@@ -217,6 +217,7 @@
 		var length = response.length;
 		var eqlist = jQuery.parseJSON(response);
 		if(length> 0){
+			$("#hazard").empty();
 			$("#hazard").append("The number of earthquakes observed in the area are:",length,'<br/>');
 			console.log(typeof(eqlist),eqlist);
 			$.each(eqlist, function( index, value ) {
