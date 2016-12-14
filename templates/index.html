@@ -202,11 +202,14 @@
                         console.log(lat);
                         console.log(lng);
 			$.ajax({
-			  type: "POST",
-			  url: '/data',
+			  url: '/data/',
 			  data: {"lat":lat,"lng":lng},
-			  success: console.log("success")
-			});
+			  success: function(response) {
+                console.log(response);
+            },
+			error: function(error) {
+                console.log(error);
+            }			});
                     }
                     map.fitBounds(bounds);
                 });

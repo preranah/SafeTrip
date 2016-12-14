@@ -1,5 +1,5 @@
 from __future__ import division
-from flask import Flask, render_template, request, url_for, jsonify, abort
+from flask import Flask, render_template, request, url_for, jsonify, abort, redirect
 import urllib2;
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
@@ -34,14 +34,17 @@ def getdata(query):
 	#conn.close()
 	return data 
 
-@app.route('/data', methods=['POST'])
+@app.route('/data/', methods=['POST','GET'])
 def postdata():
-	if not request.json:
-		abort(400)
-	lat = request.json['lat']
-	lng = request.jsonify['lng']
-	print lat,lng
-	return json.dumps(lat)
+	#lat = request.json['lat']
+	#lng = request.json['lng']
+	data = request.args.to_dict()
+	print data
+	lat = float(data['lat']) 
+	lng = float(data['lng'])
+	query = "SELECT * from TravelSafe_Earthquake.Earthquake_7 where latitude > " + str(lat-5) + " AND latitude < " + str(lat+5) + " AND longitude > " + str(lng-5) + " AND longitude < " + str(lng+5)
+	data = getdata(query) 
+	return json.dumps(data)
 
 if __name__ == "__main__":
     app.run()
